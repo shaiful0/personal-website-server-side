@@ -49,7 +49,7 @@ async function run() {
 
   } finally {
 
-    // await client.close();
+    await client.close();
 
   }
 
@@ -59,7 +59,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World! i am shariful')
+  res.send('Hello World!')
 })
 
 app.listen(port, () => {
