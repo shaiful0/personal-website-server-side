@@ -22,9 +22,10 @@ function verifyJwt(req, res, next) {
     }
     console.log('decoded', decoded);
     req.decoded = decoded;
+    next();
   })
 
-  next();
+  
 }
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.420np.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
