@@ -14,22 +14,23 @@ function verifyJWT(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).send({ message: 'unauthorized access' });
-  };
+  }
   const token = authHeader.split(' ')[1];
   jwt.verify(token, process.env.ACCESS_TOKEN_SECTET, (err, decoded) => {
     if (err) {
       return res.status(403).send({ message: 'Forbidden access' });
-    };
+    }
     console.log('decoded', decoded);
     req.decoded = decoded;
-  });
+  })
 
   next();
-};
+}
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.420np.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+// console.log(uri);
 async function run() {
 
   try {
@@ -44,13 +45,17 @@ async function run() {
     });
 
 
+
+    // console.log('all file are working');
+
+
     app.post('/login', async (req, res) => {
       const user = req.body;
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECTET, {
         expiresIn: '2d'
       });
-      res.send({ accessToken });
-    });
+      res.send({ accessToken })
+    })
 
     app.get('/items/:id', async (req, res) => {
       const id = req.params.id;
@@ -62,7 +67,7 @@ async function run() {
     app.post('/items', async (req, res) => {
       const newItem = req.body;
       const result = await itemCollection.insertOne(newItem);
-      req.send(result);
+      req.send(result)
     });
 
     app.get('/item', verifyJWT, async (req, res) => {
@@ -72,24 +77,25 @@ async function run() {
         const query = { email: email };
         const cursor = itemCollection.find(query);
         const items = await cursor.toArray();
-        res.send(items);
+        res.send(items)
       }
       else{
         res.status(403).send({message:'forbiden access'})
       }
-    });
+    })
 
     app.delete('/items/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await itemCollection.deleteOne(query);
-      res.send(result);
+      res.send(result)
     });
 
   } finally {
 
+    // await client.close();
 
-  };
+  }
 
 }
 
@@ -97,9 +103,9 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-  res.send('server is Running');
-});
+  res.send('server is Running')
+})
 
 app.listen(port, () => {
   console.log('Example app listening on port', port)
-});
+})
