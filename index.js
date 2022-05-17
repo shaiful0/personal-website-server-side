@@ -77,7 +77,7 @@ async function run() {
       else{
         res.status(403).send({message:'forbiden access'})
       }
-    })
+    });
 
     app.delete('/items/:id', async (req, res) => {
       const id = req.params.id;
