@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-function verifyJWT(req, res, next) {
+function verifyJwt(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).send({ message: 'unauthorized access' });
@@ -70,11 +70,11 @@ async function run() {
       req.send(result)
     });
 
-    app.get('/item', verifyJWT, async (req, res) => {
-      const decodedEmail = req.decoded.Email;
-      const Email = req.query.email;
-      if (Email === decodedEmail) {
-        const query = { Email: email };
+    app.get('/item', verifyJwt, async (req, res) => {
+      const decodedEmail = req.decoded.email;
+      const email = req.query.email;
+      if (email === decodedEmail) {
+        const query = { email: email };
         const cursor = itemCollection.find(query);
         const items = await cursor.toArray();
         res.send(items)
