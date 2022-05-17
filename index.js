@@ -98,7 +98,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('server is Running')
 })
 
 app.listen(port, () => {
