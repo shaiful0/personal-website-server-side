@@ -49,8 +49,8 @@ async function run() {
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECTET, {
         expiresIn: '2d'
       });
-      res.send({ accessToken })
-    })
+      res.send({ accessToken });
+    });
 
     app.get('/items/:id', async (req, res) => {
       const id = req.params.id;
@@ -62,7 +62,7 @@ async function run() {
     app.post('/items', async (req, res) => {
       const newItem = req.body;
       const result = await itemCollection.insertOne(newItem);
-      req.send(result)
+      req.send(result);
     });
 
     app.get('/item', verifyJWT, async (req, res) => {
