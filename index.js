@@ -72,7 +72,7 @@ async function run() {
         const query = { email: email };
         const cursor = itemCollection.find(query);
         const items = await cursor.toArray();
-        res.send(items)
+        res.send(items);
       }
       else{
         res.status(403).send({message:'forbiden access'})
@@ -83,13 +83,13 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await itemCollection.deleteOne(query);
-      res.send(result)
+      res.send(result);
     });
 
   } finally {
 
 
-  }
+  };
 
 }
 
@@ -97,9 +97,9 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-  res.send('server is Running')
-})
+  res.send('server is Running');
+});
 
 app.listen(port, () => {
   console.log('Example app listening on port', port)
-})
+});
